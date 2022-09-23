@@ -1,10 +1,25 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
+import { useEffect, UseState, StyleSheet, Text, View, Image, FlatList } from 'react-native';
 // Biblioteca com valor proprio para definir exatamente a distancia do header para status bar
 import {FontAwesome5} from '@expo/vector-icons';
 
+
 export default function Feed(){
 
+   const [feed, setFeed] =useState([]);
+   // linha de codigo que se conecta com servidor e usa a funcao setStories 
+  //para atualizar a variavel useState()
+  
+   
+  //funcao hook para pegar informacoes do servidor web
+   useEffect(function(){
+    async function getData() {   
+      const response = await fetch('https://mobile.ect.ufrn.br:3000/feed');
+      const storiesServidor = await response.json();
+      setStories(storiesServidor)
+    }
+    getData();
+  }, [])
 
   const feed = [
     {
@@ -16,7 +31,7 @@ export default function Feed(){
     },
     {
       id:2,
-      nome: 'Camillo',
+      nome: 'Livia',
       imgPerfil: require('../IntegrantesUra/Livia.jpg'),
       imgPost: require('../assets/PostLivia.png'),
       aspectRatio: 1.33,
